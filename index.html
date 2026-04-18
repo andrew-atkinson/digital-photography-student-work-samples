@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SP25 Student Work Examples – Digital Photo for Majors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0f0f;
+    --paper: #f5f2eb;
+    --red: #c0392b;
+    --red-pale: #f8e8e6;
+    --grey: #888;
+    --border: #d8d3c8;
+    --code-bg: #e8e4db;
+    --sidebar-w: 260px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Fraunces', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  /* ── LAYOUT ── */
+  .site-wrap { display: flex; min-height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--ink);
+    color: #e0ddd5;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  .sidebar-header {
+    padding: 28px 22px 20px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .sidebar-header .course-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+
+  .sidebar-header h1 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #f0ede5;
+  }
+
+  .sidebar-header .institution {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #555;
+    margin-top: 6px;
+    letter-spacing: .05em;
+  }
+
+  .sidebar nav { flex: 1; padding: 18px 0 30px; }
+
+  .nav-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #555;
+    padding: 16px 22px 6px;
+  }
+
+  .sidebar nav a {
+    display: block;
+    padding: 6px 22px;
+    color: #b0ac9e;
+    text-decoration: none;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    transition: color .15s, background .15s;
+    border-left: 2px solid transparent;
+    line-height: 1.5;
+  }
+
+  .sidebar nav a:hover,
+  .sidebar nav a.active {
+    color: #f0ede5;
+    border-left-color: var(--red);
+    background: #1a1a1a;
+  }
+
+  .sidebar nav a.project-link {
+    font-size: 10px;
+    color: var(--red);
+    font-weight: 500;
+    padding-top: 14px;
+    padding-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  /* ── HAMBURGER ── */
+  .menu-btn {
+    display: none;
+    position: fixed;
+    top: 14px; left: 14px;
+    z-index: 200;
+    background: var(--ink);
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: 8px 10px;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .menu-btn span {
+    display: block;
+    width: 20px; height: 2px;
+    background: #f0ede5;
+    border-radius: 2px;
+  }
+
+  /* ── MAIN ── */
+  .main { margin-left: var(--sidebar-w); flex: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 72px 64px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -60px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: var(--red);
+    opacity: .08;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 120px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: .03;
+  }
+
+  .hero .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .hero h2 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    max-width: 580px;
+  }
+
+  .hero p {
+    font-size: 14px;
+    color: #888;
+    font-family: 'DM Mono', monospace;
+    max-width: 480px;
+    line-height: 1.65;
+  }
+
+  .hero .tags {
+    margin-top: 28px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: 4px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .08em;
+    color: #666;
+  }
+
+  /* ── CONTENT ── */
+  .content { max-width: 900px; padding: 56px 64px 100px; }
+
+  /* ── PROJECT SECTION ── */
+  .project-section {
+    margin-bottom: 80px;
+    scroll-margin-top: 24px;
+  }
+
+  .project-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .project-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .project-header h2 {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  /* ── PROJECT DESCRIPTION ── */
+  .project-desc {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--red);
+    border-radius: 0 4px 4px 0;
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: #333;
+  }
+
+  .project-desc h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+
+  .project-desc p { margin-bottom: 10px; }
+  .project-desc p:last-child { margin-bottom: 0; }
+
+  .project-desc ul {
+    margin: 8px 0 12px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+  }
+
+  .project-desc ul li { margin-bottom: 4px; }
+
+  .project-desc .req-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .req-block {
+    background: var(--code-bg);
+    border-radius: 3px;
+    padding: 14px 16px;
+  }
+
+  .req-block h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 8px;
+  }
+
+  .req-block ul {
+    margin: 0 0 0 14px;
+    font-size: 13px;
+    color: #444;
+  }
+
+  .project-desc .presentation-embed {
+    margin: 16px 0 4px;
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    line-height: 0;
+  }
+
+  .project-desc .presentation-embed iframe {
+    width: 100%;
+    height: 360px;
+    border: none;
+    display: block;
+  }
+
+  /* ── IMAGES LABEL ── */
+  .sketches-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sketches-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── PHOTO GRID ── */
+  .photo-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ── PHOTO CARD ── */
+  .photo-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow .2s;
+  }
+
+  .photo-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  }
+
+  .photo-card-header {
+    padding: 14px 18px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .photo-card-header h3 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+    flex: 1;
+  }
+
+  .student-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--grey);
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .photo-wrap {
+    background: #0a0a0a;
+    line-height: 0;
+  }
+
+  .photo-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 0 56px;
+  }
+
+  /* ── LINKS ── */
+  a { color: var(--red); }
+  a:hover { text-decoration: underline; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 860px) {
+    .sidebar { transform: translateX(-100%); transition: transform .25s; }
+    .sidebar.open { transform: translateX(0); }
+    .menu-btn { display: flex; }
+    .main { margin-left: 0; }
+    .hero, .content { padding-left: 24px; padding-right: 24px; }
+    .req-grid { grid-template-columns: 1fr !important; }
+    .project-desc .presentation-embed iframe { height: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-wrap">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="course-code">Digital Photo for Majors</div>
+      <h1>Student Work Examples</h1>
+      <div class="institution">SP25</div>
+    </div>
+    <nav>
+      <div class="nav-section-label">Projects</div>
+
+      <a href="#project-1" class="project-link">01 — Portrait</a>
+      <a href="#photo-ahmedmari">Mari Ahmed</a>
+      <a href="#photo-dalessandrogianna">Gianna D'Alessandro</a>
+      <a href="#photo-perezcruzrose-portrait">Rose Cruz Perez</a>
+
+      <a href="#project-2" class="project-link">02 — Still Life</a>
+      <a href="#photo-amoschez">Chez Amos</a>
+      <a href="#photo-batresjivon">Jivon Batres</a>
+      <a href="#photo-perezcruzrose-still">Rose Cruz Perez</a>
+      <a href="#photo-zamoracollazos">Valeria Zamora Collazo</a>
+
+      <a href="#project-3" class="project-link">03 — Truth &amp; Landscape</a>
+      <a href="#photo-dsc3254">Kevin Pena</a>
+      <a href="#photo-dsc3321">Kevin Pena</a>
+      <a href="#photo-dsc3406">Kevin Pena</a>
+      <a href="#photo-exploreimages">Bralen Jones</a>
+    </nav>
+  </aside>
+
+  <!-- ── HAMBURGER ── -->
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="eyebrow">Student Gallery</div>
+      <h2>SP25 Student Work Examples from Digital Photo for Majors</h2>
+      <p>A curated selection of student photographs across portraiture, still life, and landscape — exploring light, composition, and the relationship between nature and culture.</p>
+      <div class="tags">
+        <span class="tag">Photography</span>
+        <span class="tag">SP25</span>
+        <span class="tag">3 Projects</span>
+        <span class="tag">11 Works</span>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ═══════════════════════════════════════
+           PROJECT 1: PORTRAIT
+      ═══════════════════════════════════════ -->
+      <section class="project-section" id="project-1">
+
+        <div class="project-header">
+          <div class="project-num">Project 01</div>
+          <h2>Portrait</h2>
+        </div>
+
+        <div class="project-desc">
+          <h3>Brief</h3>
+          <p>Conduct a photo shoot of a single subject — 35 exposures, as varied as possible. A portrait is as much about your work behind the camera as your subject's presence in front of it.</p>
+
+          <div class="presentation-embed">
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQfBSlU04BBikB9CupIzzk_A8-deQMVLtdUqP1BXzpf7X3U1bn9HE5OHiQtCFL2XB9jn3FnmWFxiwCs/pubembed?start=false&loop=false&delayms=3000" allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+          </div>
+
+          <div class="req-grid">
+            <div class="req-block">
+              <h4>What to Vary</h4>
+              <ul>
+                <li>Framing of the environment</li>
+                <li>Distance and perspective</li>
+                <li>Light quality and direction</li>
+                <li>Point of view and scale</li>
+                <li>Focus — sharp vs. shallow depth</li>
+              </ul>
+            </div>
+            <div class="req-block">
+              <h4>Submission</h4>
+              <ul>
+                <li>35 raw images in a zip file</li>
+                <li>Explore your subject actively</li>
+                <li>Camera work matters as much as posing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="sketches-label">Student Submissions</div>
+
+        <div class="photo-grid">
+
+          <div class="photo-card" id="photo-ahmedmari">
+            <div class="photo-card-header">
+              <h3>Portrait</h3>
+              <span class="student-badge">Mari Ahmed</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="ahmedmari_202394_20591399_DSC_0505-1 Large.jpeg" alt="Portrait by ahmedmari" loading="lazy">
+            </div>
+          </div>
+
+          <div class="photo-card" id="photo-dalessandrogianna">
+            <div class="photo-card-header">
+              <h3>Portrait</h3>
+              <span class="student-badge">Gianna D'Alessandro</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="dalessandrogianna_153499_20357730_IMG_9301 Large.jpeg" alt="Portrait by dalessandrogianna" loading="lazy">
+            </div>
+          </div>
+
+          <div class="photo-card" id="photo-perezcruzrose-portrait">
+            <div class="photo-card-header">
+              <h3>Portrait</h3>
+              <span class="student-badge">Rose Cruz Perez</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="perezcruzrose_188016_20591699_FinalEdits.Series&Sequence_ROSEPEREZ.tifFOR_PRINT_ROSEPEREZ-5 Large.jpeg" alt="Portrait by perezcruzrose" loading="lazy">
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- ═══════════════════════════════════════
+           PROJECT 2: STILL LIFE
+      ═══════════════════════════════════════ -->
+      <section class="project-section" id="project-2">
+
+        <div class="project-header">
+          <div class="project-num">Project 02</div>
+          <h2>Still Life</h2>
+        </div>
+
+        <div class="project-desc">
+          <h3>Brief</h3>
+          <p>Shoot 35 frames for a still life, using objects, light, composition, and framing to create meaning. The arrangement, the light hierarchy, and your position as viewer all shape the image's associations.</p>
+
+          <div class="presentation-embed">
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSK5Up3l5-zELklSpdd2de601U8hvnPT7_Rnvnc8UP7HK-O0D2e1jxklQ3Xgv93ujRsnc0JFgkJ1z4k/pubembed?start=false&loop=false&delayms=3000" allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+          </div>
+
+          <div class="req-grid">
+            <div class="req-block">
+              <h4>Consider</h4>
+              <ul>
+                <li>The meaning of objects — metaphorical associations</li>
+                <li>Light — creating visual hierarchy</li>
+                <li>Composition — arrangement and proximity</li>
+                <li>Framing — your position as viewer</li>
+                <li>Variation across all four dimensions</li>
+              </ul>
+            </div>
+            <div class="req-block">
+              <h4>Submission</h4>
+              <ul>
+                <li>35 raw images in a zip file</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="sketches-label">Student Submissions</div>
+
+        <div class="photo-grid">
+
+          <div class="photo-card" id="photo-amoschez">
+            <div class="photo-card-header">
+              <h3>Still Life</h3>
+              <span class="student-badge">Chez Amos</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="amoschez_181840_20581801_final.7 Large.jpeg" alt="Still Life by amoschez" loading="lazy">
+            </div>
+          </div>
+
+          <div class="photo-card" id="photo-batresjivon">
+            <div class="photo-card-header">
+              <h3>Still Life</h3>
+              <span class="student-badge">Jivon Batres</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="batresjivon_187374_20587988_Still Life-1 Large.jpeg" alt="Still Life by batresjivon" loading="lazy">
+            </div>
+          </div>
+
+          <div class="photo-card" id="photo-perezcruzrose-still">
+            <div class="photo-card-header">
+              <h3>Still Life</h3>
+              <span class="student-badge">Rose Cruz Perez</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="perezcruzrose_188016_20591710__DSC0586-revised 2 Large.jpeg" alt="Still Life by perezcruzrose" loading="lazy">
+            </div>
+          </div>
+
+          <div class="photo-card" id="photo-zamoracollazos">
+            <div class="photo-card-header">
+              <h3>Still Life</h3>
+              <span class="student-badge">Valeria Zamora Collazo</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="zamoracollazosvaleria_166748_20580921_Zamora-Collazos_Valeria_Serie and Sequence_Portfolio_SP25-5 Large.jpeg" alt="Still Life by zamoracollazos" loading="lazy">
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- ═══════════════════════════════════════
+           PROJECT 3: TRUTH AND LANDSCAPE
+      ═══════════════════════════════════════ -->
+      <section class="project-section" id="project-3">
+
+        <div class="project-header">
+          <div class="project-num">Project 03</div>
+          <h2>Truth and Landscape</h2>
+        </div>
+
+        <div class="project-desc">
+          <h3>Brief</h3>
+          <p>Explore the relationship between nature and culture through landscape photography — drawing on Robert Adams' essay <em>Truth and Landscape</em> and the historical aesthetic categories of the Beautiful, the Picturesque, and the Sublime.</p>
+
+          <div class="presentation-embed">
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSdvFZJVH1QDBkQznyeYfCoYYaKwBpt54xIMWDMt8hsVsVEOMmOvaT1_uNDb0GiCdtyRfhfu0c43R9Y/pubembed?start=false&loop=false&delayms=3000" allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+          </div>
+
+          <div class="req-grid">
+            <div class="req-block">
+              <h4>Three Aesthetic Categories</h4>
+              <ul>
+                <li><strong>The Beautiful</strong> — balance, severe order, power and eternity</li>
+                <li><strong>The Picturesque</strong> — variety, painterly composition, artful irregularity</li>
+                <li><strong>The Sublime</strong> — overwhelming power of nature, awe and insignificance</li>
+              </ul>
+              <p style="margin-top:10px; font-size:13px; color:var(--grey);">Or explore Adams' framework of Geography, Autobiography, and Metaphor.</p>
+            </div>
+            <div class="req-block">
+              <h4>Submission</h4>
+              <ul>
+                <li>100 shots — upload a screen grab of imported (unedited) images</li>
+                <li>3 final images (one per category)</li>
+                <li>300-word reflection on truth, landscape, and your compositions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="sketches-label">Student Submissions</div>
+
+        <div class="photo-grid">
+
+          <div class="photo-card" id="photo-dsc3254">
+            <div class="photo-card-header">
+              <h3>Truth and Landscape</h3>
+              <span class="student-badge">Kevin Pena</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="_DSC3254 Large.jpeg" alt="Truth and Landscape — _DSC3254" loading="lazy">
+            </div>
+          </div>
+
+          <div class="photo-card" id="photo-dsc3321">
+            <div class="photo-card-header">
+              <h3>Truth and Landscape</h3>
+              <span class="student-badge">Kevin Pena</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="_DSC3321 Large.jpeg" alt="Truth and Landscape — _DSC3321" loading="lazy">
+            </div>
+          </div>
+
+          <div class="photo-card" id="photo-dsc3406">
+            <div class="photo-card-header">
+              <h3>Truth and Landscape</h3>
+              <span class="student-badge">Kevin Pena</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="_DSC3406 Large.jpeg" alt="Truth and Landscape — _DSC3406" loading="lazy">
+            </div>
+          </div>
+
+          <div class="photo-card" id="photo-exploreimages">
+            <div class="photo-card-header">
+              <h3>Truth and Landscape</h3>
+              <span class="student-badge">Bralen Jones</span>
+            </div>
+            <div class="photo-wrap">
+              <img src="exploreimages_after Large.jpeg" alt="Truth and Landscape — exploreimages_after" loading="lazy">
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /.content -->
+  </main>
+</div><!-- /.site-wrap -->
+
+<script>
+  /* ── Sidebar ── */
+  const btn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  btn.addEventListener('click', () => sidebar.classList.toggle('open'));
+  sidebar.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      if (window.innerWidth <= 860) sidebar.classList.remove('open');
+    });
+  });
+
+  /* ── Active nav on scroll ── */
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.sidebar nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.sidebar nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-40px 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
